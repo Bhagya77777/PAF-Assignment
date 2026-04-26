@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useGoogleLogin } from '@react-oauth/google';
 import { LogIn, UserPlus, Shield, Mail, Lock, User, Loader2 } from 'lucide-react';
 import { useUser } from '../../context/UserContext';
 import { useToast } from '../../context/ToastContext';
@@ -60,6 +61,35 @@ const Login = () => {
       setIsLoading(false);
     }
   };
+
+  const handleGoogleLogin = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      setIsLoading(true);
+      try {
+        const response = await authService.googleLogin(tokenResponse.access_token);
+        const { token, user } = response.data;
+        
+        if (user && token) {
+          login({
+            id: user.id.toString(),
+            name: user.name,
+            email: user.email,
+            role: user.role
+          }, token);
+          toast('success', 'Google Auth Success', `Welcome, ${user.name}. Clearance validated.`);
+          navigate('/');
+        }
+      } catch (err: any) {
+        const errorMsg = err.response?.data || 'Backend refused Google credentials or connection error.';
+        toast('error', 'Google Auth Failed', typeof errorMsg === 'string' ? errorMsg : JSON.stringify(errorMsg));
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    onError: () => {
+      toast('error', 'Auth Protocol Failure', 'Google Secure Identity Matrix connection failed.');
+    }
+  });
 
   return (
     <div className="login-container">
@@ -156,6 +186,22 @@ const Login = () => {
             ) : (
               isLogin ? 'Enter Workspace' : 'Initialize Account'
             )}
+          </motion.button>
+
+          <div className="login-divider">
+            <span>Or continue with</span>
+          </div>
+
+          <motion.button 
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            type="button" 
+            className="google-btn"
+            onClick={() => handleGoogleLogin()}
+            disabled={isLoading}
+          >
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" />
+            Continue with Google
           </motion.button>
         </form>
 

@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
+import StatsBanner from './StatsBanner';
 import './Layout.css';
 
 const Layout = () => {
@@ -9,6 +10,7 @@ const Layout = () => {
     <div className="app-container">
       <Sidebar />
       <main className="main-content">
+        <StatsBanner />
         <div className="content-wrapper">
           <AnimatePresence mode="wait">
             <motion.div

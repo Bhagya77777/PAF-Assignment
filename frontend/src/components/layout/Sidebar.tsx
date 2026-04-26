@@ -23,6 +23,7 @@ const Sidebar = () => {
     { icon: <CalendarCheck size={20} />, label: 'Bookings', path: '/bookings', roles: ['STUDENT', 'ADMIN'] },
     { icon: <AlertCircle size={20} />, label: 'Incidents', path: '/incidents', roles: ['ADMIN', 'TECHNICIAN', 'STUDENT'] },
     { icon: <Bell size={20} />, label: 'Notifications', path: '/notifications', roles: ['STUDENT', 'ADMIN', 'TECHNICIAN'] },
+    { icon: <UserIcon size={20} />, label: 'My Profile', path: '/profile', roles: ['STUDENT', 'ADMIN', 'TECHNICIAN'] },
   ];
 
   const filteredItems = allNavItems.filter(item => 

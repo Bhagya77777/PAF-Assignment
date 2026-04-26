@@ -19,6 +19,8 @@ import {
 import { resourceService } from '../../services/api';
 import { useUser } from '../../context/UserContext';
 import { useToast } from '../../context/ToastContext';
+import PageHeaderStats from '../../components/common/PageHeaderStats';
+import { Activity, CheckCircle, AlertTriangle } from 'lucide-react';
 import './Facilities.css';
 
 interface Resource {
@@ -39,6 +41,12 @@ const Facilities = () => {
   const [resources, setResources] = useState<Resource[]>([]);
   const [filteredResources, setFilteredResources] = useState<Resource[]>([]);
   const [loading, setLoading] = useState(true);
+  
+  const stats = [
+    { label: 'Total Fleet', value: resources.length, icon: <Activity size={18}/>, color: 'indigo' as const },
+    { label: 'Ready for Ops', value: resources.filter(r => r.status === 'AVAILABLE').length, icon: <CheckCircle size={18}/>, color: 'emerald' as const },
+    { label: 'Maintenance', value: resources.filter(r => r.status === 'MAINTENANCE').length, icon: <AlertTriangle size={18}/>, color: 'rose' as const },
+  ];
   const [showModal, setShowModal] = useState(false);
   const [selectedResource, setSelectedResource] = useState<Resource | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -150,6 +158,8 @@ const Facilities = () => {
           </motion.button>
         )}
       </header>
+      
+      <PageHeaderStats stats={stats} />
 
       <div className="discovery-bar">
         <div className="search-wrap-v2">

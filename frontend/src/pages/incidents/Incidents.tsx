@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Clock, 
-  CheckCircle2, 
-  Plus, 
-  X, 
-  MapPin, 
-  Tag, 
-  ChevronRight, 
+import {
+  Clock,
+  CheckCircle2,
+  Plus,
+  X,
+  MapPin,
+  Tag,
+  ChevronRight,
   Send,
   AlertOctagon,
   ShieldAlert,
@@ -51,7 +51,7 @@ const Incidents = () => {
   const [comments, setComments] = useState<TicketComment[]>([]);
   const [newComment, setNewComment] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   const [formData, setFormData] = useState({
     subject: '',
     description: '',
@@ -119,7 +119,7 @@ const Incidents = () => {
       await ticketService.updateStatus(id, status);
       fetchTickets();
       if (selectedTicket?.id === id) {
-        setSelectedTicket({...selectedTicket, status});
+        setSelectedTicket({ ...selectedTicket, status });
       }
       toast('success', 'State Change', `Incident marked as ${status.toLowerCase()}`);
     } catch (err) {
@@ -139,7 +139,7 @@ const Incidents = () => {
   const handleAddComment = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newComment.trim() || !selectedTicket) return;
-    
+
     try {
       const commentData = {
         authorId: user?.name || user?.email || 'Unknown Operative',
@@ -163,10 +163,10 @@ const Incidents = () => {
           </motion.h1>
           <p>Campus Infrastructure Support & Real-time Incident Monitoring</p>
         </div>
-        <motion.button 
+        <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="action-btn-primary" 
+          className="action-btn-primary"
           onClick={() => setShowModal(true)}
         >
           <Plus size={20} /> Report Infrastructure Fault
@@ -190,7 +190,7 @@ const Incidents = () => {
 
       <div className="ops-board-grid">
         {loading ? (
-          [1,2,3,4].map(i => <div key={i} className="skeleton-ticket-card" />)
+          [1, 2, 3, 4].map(i => <div key={i} className="skeleton-ticket-card" />)
         ) : tickets.length === 0 ? (
           <div className="board-empty-state">
             <ShieldAlert size={64} className="fade-icon" />
@@ -200,12 +200,12 @@ const Incidents = () => {
         ) : (
           <AnimatePresence>
             {tickets.map((t, idx) => (
-              <motion.div 
+              <motion.div
                 layout
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.05 }}
-                key={t.id} 
+                key={t.id}
                 className={`ops-ticket-card ${t.status.toLowerCase()} ${t.priority.toLowerCase()}`}
               >
                 <div className="card-severity-glow" />
@@ -215,11 +215,11 @@ const Incidents = () => {
                     {t.priority}
                   </span>
                   <div className="status-badge">
-                    {t.status === 'RESOLVED' ? <CheckCircle2 size={14}/> : <Clock size={14}/>}
+                    {t.status === 'RESOLVED' ? <CheckCircle2 size={14} /> : <Clock size={14} />}
                     {t.status}
                   </div>
                 </div>
-                
+
                 <div className="card-mid">
                   <h3>{t.subject}</h3>
                   <p>{t.description}</p>
@@ -227,23 +227,23 @@ const Incidents = () => {
 
                 <div className="card-meta-belt">
                   <div className="meta-point">
-                    <MapPin size={14}/> <span>{t.location}</span>
+                    <MapPin size={14} /> <span>{t.location}</span>
                   </div>
                   <div className="meta-point">
-                    <Tag size={14}/> <span>{t.category}</span>
+                    <Tag size={14} /> <span>{t.category}</span>
                   </div>
                 </div>
 
                 <div className="card-footer-v2">
                   <div className="operative-info">
                     <div className="operative-avatar">
-                        <User size={12}/>
+                      <User size={12} />
                     </div>
                     <span>{t.assigneeId || 'Unassigned'}</span>
                   </div>
                   <button className="btn-open-comms" onClick={() => {
-                      setSelectedTicket(t);
-                      fetchComments(t.id);
+                    setSelectedTicket(t);
+                    fetchComments(t.id);
                   }}>
                     Open Comms <ChevronRight size={14} />
                   </button>
@@ -258,14 +258,14 @@ const Incidents = () => {
       <AnimatePresence>
         {selectedTicket && (
           <div className="modal-portal">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="modal-backdrop"
               onClick={() => setSelectedTicket(null)}
             />
-            <motion.div 
+            <motion.div
               initial={{ x: '100%', opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: '100%', opacity: 0 }}
@@ -274,7 +274,7 @@ const Incidents = () => {
               <div className="panel-header">
                 <div className="ticket-id-strip">
                   <span>LOG ID: #TIC-{selectedTicket.id}</span>
-                  <button className="panel-close" onClick={() => setSelectedTicket(null)}><X size={20}/></button>
+                  <button className="panel-close" onClick={() => setSelectedTicket(null)}><X size={20} /></button>
                 </div>
                 <h2>{selectedTicket.subject}</h2>
                 <div className="panel-badges">
@@ -289,7 +289,7 @@ const Incidents = () => {
 
               <div className="panel-body">
                 <div className="intel-section">
-                  <h4><MapPin size={16}/> SECTOR LOGISTICS</h4>
+                  <h4><MapPin size={16} /> SECTOR LOGISTICS</h4>
                   <p>{selectedTicket.location} • Category: {selectedTicket.category}</p>
                   <p className="intel-desc">{selectedTicket.description}</p>
                 </div>
@@ -307,13 +307,13 @@ const Incidents = () => {
                 </div>
 
                 <div className="comms-hub">
-                  <h4><History size={16}/> COMMUNICATION TRANSCRIPT</h4>
+                  <h4><History size={16} /> COMMUNICATION TRANSCRIPT</h4>
                   <div className="comms-stream">
                     {comments.map((comment) => (
                       <div key={comment.id} className="comm-bubble">
                         <div className="comm-top">
                           <span className="comm-author">{comment.authorId}</span>
-                          <span className="comm-time">{new Date(comment.createdAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                          <span className="comm-time">{new Date(comment.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                         </div>
                         <p>{comment.content}</p>
                       </div>
@@ -325,9 +325,9 @@ const Incidents = () => {
 
               <div className="panel-input-area">
                 <form onSubmit={handleAddComment} className="comm-form">
-                  <input 
-                    type="text" 
-                    placeholder="Transmit message to resolution team..." 
+                  <input
+                    type="text"
+                    placeholder="Transmit message to resolution team..."
                     value={newComment}
                     onChange={(e) => setNewComment(e.target.value)}
                   />
@@ -345,14 +345,14 @@ const Incidents = () => {
       <AnimatePresence>
         {showModal && (
           <div className="modal-portal">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="modal-backdrop"
               onClick={() => setShowModal(false)}
             />
-            <motion.div 
+            <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
@@ -360,24 +360,24 @@ const Incidents = () => {
             >
               <div className="modal-top">
                 <h2>Initialize Maintenance Ticket</h2>
-                <button className="close-portal" onClick={() => setShowModal(false)}><X size={24}/></button>
+                <button className="close-portal" onClick={() => setShowModal(false)}><X size={24} /></button>
               </div>
               <form onSubmit={handleCreate} className="elite-form">
                 <div className="form-grid">
                   <div className="form-field full">
                     <label>Incident Designation</label>
-                    <input 
-                      type="text" required 
+                    <input
+                      type="text" required
                       placeholder="e.g. Critical Server Rack Overheat"
                       value={formData.subject}
-                      onChange={(e) => setFormData({...formData, subject: e.target.value})}
+                      onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                     />
                   </div>
                   <div className="form-field">
                     <label>Systems Category</label>
-                    <select 
+                    <select
                       value={formData.category}
-                      onChange={(e) => setFormData({...formData, category: e.target.value})}
+                      onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                     >
                       <option value="ELECTRICAL">Electrical Grid</option>
                       <option value="PLUMBING">Hydraulic / Plumbing</option>
@@ -387,9 +387,9 @@ const Incidents = () => {
                   </div>
                   <div className="form-field">
                     <label>Severity Protocol</label>
-                    <select 
+                    <select
                       value={formData.priority}
-                      onChange={(e) => setFormData({...formData, priority: e.target.value})}
+                      onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
                     >
                       <option value="LOW">Routine Monitoring</option>
                       <option value="MEDIUM">Operational Warning</option>
@@ -398,20 +398,20 @@ const Incidents = () => {
                   </div>
                   <div className="form-field full">
                     <label>Detailed Intel</label>
-                    <textarea 
+                    <textarea
                       rows={3} required
                       value={formData.description}
-                      onChange={(e) => setFormData({...formData, description: e.target.value})}
+                      onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                       placeholder="Describe the nature of the fault per standard protocol..."
                     />
                   </div>
                   <div className="form-field full">
                     <label>Sector Coordinates</label>
-                    <input 
+                    <input
                       type="text" required
                       placeholder="Sector, Level, Grid Reference"
                       value={formData.location}
-                      onChange={(e) => setFormData({...formData, location: e.target.value})}
+                      onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                     />
                   </div>
                 </div>

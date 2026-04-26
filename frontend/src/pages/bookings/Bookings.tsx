@@ -12,11 +12,13 @@ import {
   User,
   MapPin,
   FileText,
-  AlertTriangle
+  AlertTriangle,
+  ClipboardList
 } from 'lucide-react';
 import { bookingService, resourceService } from '../../services/api';
 import { useUser } from '../../context/UserContext';
 import { useToast } from '../../context/ToastContext';
+import PageHeaderStats from '../../components/common/PageHeaderStats';
 import './Bookings.css';
 
 interface Booking {
@@ -52,6 +54,12 @@ const Bookings = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [resources, setResources] = useState<Resource[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const stats = [
+    { label: 'Total Requests', value: bookings.length, icon: <ClipboardList size={18}/>, color: 'indigo' as const },
+    { label: 'Authorized', value: bookings.filter(b => b.status === 'APPROVED').length, icon: <CheckCircle2 size={18}/>, color: 'emerald' as const },
+    { label: 'Pending Auth', value: bookings.filter(b => b.status === 'PENDING').length, icon: <Clock size={18}/>, color: 'amber' as const },
+  ];
   const [showModal, setShowModal] = useState(false);
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -163,6 +171,8 @@ const Bookings = () => {
           </motion.button>
         )}
       </header>
+      
+      <PageHeaderStats stats={stats} />
 
       <motion.div 
         initial={{ opacity: 0, y: 20 }}

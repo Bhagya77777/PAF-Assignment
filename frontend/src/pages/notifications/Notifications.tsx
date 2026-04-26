@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  BellOff, 
-  Trash2, 
+import {
+  BellOff,
+  Trash2,
   RefreshCw,
   Search,
   Plus,
@@ -32,12 +32,12 @@ interface Notification {
 const Notifications = () => {
   const { user } = useUser();
   const { toast } = useToast();
-  
+
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [filterPriority, setFilterPriority] = useState('ALL');
-  
+
   // Admin Modal State
   const [showModal, setShowModal] = useState(false);
   const [editingNotif, setEditingNotif] = useState<Notification | null>(null);
@@ -114,9 +114,9 @@ const Notifications = () => {
           </motion.h1>
           <p>Global intelligence and operational status updates</p>
         </div>
-        
+
         {isAdmin && (
-          <motion.button 
+          <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="btn-add-broadcast"
@@ -131,17 +131,17 @@ const Notifications = () => {
       <div className="feed-toolbar">
         <div className="search-box-v2">
           <Search size={18} className="search-icon" />
-          <input 
-            type="text" 
-            placeholder="Search by keywords (e.g. 'Today', 'Maintenance')..." 
+          <input
+            type="text"
+            placeholder="Search by keywords (e.g. 'Today', 'Maintenance')..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
-        
+
         <div className="priority-filters">
           {['ALL', 'URGENT', 'EVENT', 'INFO'].map(p => (
-            <button 
+            <button
               key={p}
               className={`filter-chip ${filterPriority === p ? 'active' : ''}`}
               onClick={() => setFilterPriority(p)}
@@ -167,7 +167,7 @@ const Notifications = () => {
           <div className="feed-grid">
             <AnimatePresence>
               {notifications.map((n, idx) => (
-                <motion.div 
+                <motion.div
                   layout
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -187,10 +187,10 @@ const Notifications = () => {
                         {new Date(n.createdAt).toLocaleDateString()}
                       </span>
                     </div>
-                    
+
                     <h3 className="notice-title">{n.title || 'Inbound Intelligence'}</h3>
                     <p className="notice-msg">{n.message}</p>
-                    
+
                     {isAdmin && (
                       <div className="card-admin-actions">
                         <button onClick={() => openEdit(n)} className="btn-edit" title="Edit Entry">
@@ -213,7 +213,7 @@ const Notifications = () => {
       <AnimatePresence>
         {showModal && (
           <div className="modal-overlay">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
@@ -226,21 +226,21 @@ const Notifications = () => {
               <form onSubmit={handleCreateOrUpdate} className="broadcast-form">
                 <div className="form-group">
                   <label>Title</label>
-                  <input 
-                    type="text" 
-                    required 
+                  <input
+                    type="text"
+                    required
                     value={formData.title}
-                    onChange={(e) => setFormData({...formData, title: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                     placeholder="E.g. Server Maintenance"
                   />
                 </div>
                 <div className="form-group">
                   <label>Message</label>
-                  <textarea 
-                    required 
+                  <textarea
+                    required
                     rows={4}
                     value={formData.message}
-                    onChange={(e) => setFormData({...formData, message: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     placeholder="Details about the broadcast..."
                   />
                 </div>
@@ -248,11 +248,11 @@ const Notifications = () => {
                   <label>Priority Protocol</label>
                   <div className="priority-selector">
                     {['URGENT', 'EVENT', 'INFO'].map(p => (
-                      <button 
+                      <button
                         type="button"
                         key={p}
                         className={`p-btn ${formData.priority === p ? 'active' : ''} ${p.toLowerCase()}`}
-                        onClick={() => setFormData({...formData, priority: p})}
+                        onClick={() => setFormData({ ...formData, priority: p })}
                       >
                         {p}
                       </button>

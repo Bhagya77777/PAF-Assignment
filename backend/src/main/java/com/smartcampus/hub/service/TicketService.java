@@ -3,6 +3,7 @@ package com.smartcampus.hub.service;
 import com.smartcampus.hub.model.Comment;
 import com.smartcampus.hub.model.Ticket;
 import com.smartcampus.hub.repository.CommentRepository;
+import com.smartcampus.hub.repository.ResourceRepository;
 import com.smartcampus.hub.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,13 +14,13 @@ import java.util.List;
 public class TicketService {
 
     @Autowired
-    private com.smartcampus.hub.repository.TicketRepository ticketRepository;
+    private TicketRepository ticketRepository;
 
     @Autowired
-    private com.smartcampus.hub.repository.CommentRepository commentRepository;
+    private CommentRepository commentRepository;
 
     @Autowired
-    private com.smartcampus.hub.repository.ResourceRepository resourceRepository;
+    private ResourceRepository resourceRepository;
 
     @Autowired
     private NotificationService notificationService;

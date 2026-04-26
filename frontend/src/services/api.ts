@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8080/api';
+const API_BASE_URL = 'http://localhost:8081/api';
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
@@ -77,6 +77,7 @@ export const notificationService = {
 export const authService = {
   login: (credentials: any) => apiClient.post('/auth/login', credentials),
   register: (data: any) => apiClient.post('/auth/register', data),
+  googleLogin: (token: string) => apiClient.post('/auth/google', { token }),
 };
 
 export default apiClient;
