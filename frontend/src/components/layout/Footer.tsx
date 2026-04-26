@@ -2,6 +2,8 @@ import './Footer.css';
 
 const Footer = () => {
   return (
+
+    
     <footer className="app-footer">
       <div className="copyright">
         &copy; {new Date().getFullYear()} SmartCampus Hub. All rights reserved.
