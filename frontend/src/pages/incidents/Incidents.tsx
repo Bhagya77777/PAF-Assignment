@@ -18,7 +18,7 @@ import {
 import { ticketService } from '../../services/api';
 import { useUser } from '../../context/UserContext';
 import { useToast } from '../../context/ToastContext';
-import './Incidents.css';
+import './Incidents.css'; 
 
 interface Ticket {
   id: number;

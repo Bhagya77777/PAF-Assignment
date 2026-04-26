@@ -14,7 +14,7 @@
   display: flex;
   gap: 24px;
 }
-
+ 
 .footer-link {
   color: var(--text-muted);
   text-decoration: none;
