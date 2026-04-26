@@ -12,7 +12,7 @@ import {
   AlertOctagon,
   ShieldAlert,
   Zap,
-  User,
+  User, 
   History
 } from 'lucide-react';
 import { ticketService } from '../../services/api';
